@@ -1,2 +1,4 @@
 # HappyGreen
-SensorTile for golf
+
+
+## This is a placeholder for the project
