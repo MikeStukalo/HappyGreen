@@ -1,6 +1,8 @@
 import struct
 from bluepy.btle import *
 import pandas as pd
+import time
+
 
 out = []
 
@@ -27,6 +29,13 @@ print("Connected")
 notify = p.getCharacteristics(uuid=chara_uuid)[0]
 notify_handle = notify.getHandle() +1
 print(notify_handle)
+
+input("Press Enter to continue...")
+
+for i in range(10):
+    print('Ready', i+1)
+    time.sleep(1)
+
 try:
     p.writeCharacteristic(notify_handle, b"\x01\x00", withResponse=True)
     print("writing done")
@@ -41,4 +50,5 @@ except KeyboardInterrupt:
     out = pd.DataFrame(out)
     out.head()
     print('Saving')
-    out.to_csv("./test_df.csv")
+    name_f = "./data/raw_"+time.strftime("%Y%m%d-%H%M%S")+".csv"
+    out.to_csv(name_f)
