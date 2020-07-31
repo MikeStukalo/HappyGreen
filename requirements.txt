@@ -1,4 +1,4 @@
 bluepy
-futures
-blue-st-sdk
+matplotlib
+seaborn
 catboost
