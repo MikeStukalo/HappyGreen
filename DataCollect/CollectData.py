@@ -30,7 +30,7 @@ notify = p.getCharacteristics(uuid=chara_uuid)[0]
 notify_handle = notify.getHandle() +1
 print(notify_handle)
 
-input("Press Enter to continue...")
+input("Press Enter to continue... Press Ctrl+C to interrupt")
 
 for i in range(10):
     print('Ready', i+1)
