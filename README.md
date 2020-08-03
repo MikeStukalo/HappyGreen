@@ -25,4 +25,6 @@ The putts were recorded and tested using an indoor putt green.
 
 \Report - project report (.doc and .pdf)
 
-
+## Video
+You can watch a video presentation here
+<Paste link>
