@@ -26,7 +26,6 @@ def MakePrediction(distance, df, lower_bound_AZ, window, margin, model):
     else:
         # Create dataset for the  model
         feats['Distance'] = distance
-        #feats.drop('Id', axis=1, inplace=True)
         feats = feats[model.feature_names_]
         print(feats)
         pred = model.predict(feats)
@@ -67,7 +66,7 @@ if __name__ == "__main__":
 
     if pr[0] == 0:
         print('Miss')
-        os.system('spd-say "You Miss"')
+        os.system('spd-say "You Missed"')
 
     elif pr[0] == 1:
         print('Scored')
