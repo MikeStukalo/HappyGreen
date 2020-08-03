@@ -49,6 +49,7 @@ if __name__ == "__main__":
 
     # Distance
     distance = input("Enter approximate distance in feet: ")
+
     try:
         float(distance)
 
@@ -56,6 +57,10 @@ if __name__ == "__main__":
         print('Enter numeric only')
 
     df = CD.CollectData(mac)
+
+    # Pad df to have enough observations
+    pad = df.replace(df, 0)
+    df = pad.append(df, ignore_index=True).append(pad, ignore_index=True)
 
     pr = MakePrediction(distance, df, lower_bound_AZ, window, margin, model)
 
@@ -70,5 +75,3 @@ if __name__ == "__main__":
     else:
         print('No putt detected')
         os.system('spd-say "No putt detected"')
-
-
