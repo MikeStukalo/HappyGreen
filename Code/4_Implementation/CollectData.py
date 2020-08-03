@@ -5,15 +5,12 @@ import time
 import os
 
 
-
-
 def CollectData(mac):
     '''
     Function that collects data from the sensor
     '''
 
     out = []
-
 
     class MyDelegate(DefaultDelegate):
         def __init__(self):
@@ -44,7 +41,7 @@ def CollectData(mac):
     input("Press Enter to continue... ")
 
     os.system('spd-say "Ready"')
-    for i in range(3, 0, -1):
+    for i in range(3, 1, -1):
         print('Ready', i + 1)
         time.sleep(1)
 
@@ -57,13 +54,11 @@ def CollectData(mac):
     t = 0
     start = time.time()
     while t < 3.0:
-        t = time.time()-start
+        t = time.time() - start
         if p.waitForNotifications(1.0):
             continue
 
     os.system('spd-say "Stop"')
     print("Disconnected")
     out = pd.DataFrame(out)
-    out.to_csv("~/Documents/test.csv")
-    print(out.head())
     return(out)

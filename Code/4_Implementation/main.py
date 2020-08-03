@@ -21,7 +21,7 @@ def MakePrediction(distance, df, lower_bound_AZ, window, margin, model):
 
     # Check that features were extracted
     if feats.shape[0] != 1:
-        return(np.nan)
+        return([np.nan])
 
     else:
         # Create dataset for the  model
@@ -66,11 +66,11 @@ if __name__ == "__main__":
 
     if pr[0] == 0:
         print('Miss')
-        os.system('spd-say "Miss"')
+        os.system('spd-say "You Miss"')
 
     elif pr[0] == 0:
         print('Scored')
-        os.system('spd-say "Scored"')
+        os.system('spd-say "You Scored"')
 
     else:
         print('No putt detected')

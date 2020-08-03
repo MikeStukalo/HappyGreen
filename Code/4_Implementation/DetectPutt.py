@@ -75,27 +75,32 @@ def MarkPutts(df, lower_bound_AZ, window, margin):
     df.loc[df.Mark == 1, 'Stage'] = 'Back'
     df.loc[(df.Mark == 2) | (df.Mark == 3), 'Stage'] = 'Forward'
 
-    # Get the first marked observation
-    first_ind = df.Mark.first_valid_index()
-    last_ind = df.Mark.last_valid_index()
+    # Check that there is something to return
+    if df.loc[(df["Stage"] == 'Back') | (df["Stage"] == 'Forward'), :].shape[0] < 3:
+        return (pd.DataFrame())
 
-    # Keep only relevant observations
-    df = df.iloc[first_ind:(last_ind + 1), :]
+    else:
+        # Get the first marked observation
+        first_ind = df.Mark.first_valid_index()
+        last_ind = df.Mark.last_valid_index()
 
-    # Find end of the putt
-    for i in range(1, df.shape[0]):
-        if (df.iloc[i - 1, :]['Mark'] == 3) & (pd.isna(df.iloc[i, :]['Mark'])):
+        # Keep only relevant observations
+        df = df.iloc[first_ind:(last_ind + 1), :]
 
-            df.iloc[i, df.columns.get_loc('Stage')] = 'Rest'
+        # Find end of the putt
+        for i in range(1, df.shape[0]):
+            if (df.iloc[i - 1, :]['Mark'] == 3) & (pd.isna(df.iloc[i, :]['Mark'])):
 
-    df.Stage = df.Stage.ffill()
+                df.iloc[i, df.columns.get_loc('Stage')] = 'Rest'
 
-    # Clean up weird observations
+        df.Stage = df.Stage.ffill()
 
-    df.Stage.loc[(df.Stage.shift() == 'Rest') & (
-        df.Stage.shift(-1) == 'Rest') & (df.Stage != 'Rest')] = 'Rest'
+        # Clean up weird observations
 
-    return df
+        df.Stage.loc[(df.Stage.shift() == 'Rest') & (
+            df.Stage.shift(-1) == 'Rest') & (df.Stage != 'Rest')] = 'Rest'
+
+        return df
 
 
 # Function to create dataframe
@@ -166,8 +171,14 @@ class Putt:
         with pd.option_context('mode.chained_assignment', None):
             tmp_ = SeparateDF(self.df, self.lower_bound_AZ,
                               self.window, self.margin)
-        tmp_ = tmp_.loc[tmp_.Stage != 'Rest', :]
-        return(tmp_)
+
+        # Check that there is something to return
+        if tmp_.shape[0] > 0:
+            tmp_ = tmp_.loc[tmp_.Stage != 'Rest', :]
+            return(tmp_)
+
+        else:
+            return(pd.DataFrame())
 
     def features(self):
         df = self.marked()
