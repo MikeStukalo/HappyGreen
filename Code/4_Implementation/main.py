@@ -69,10 +69,10 @@ if __name__ == "__main__":
         print('Miss')
         os.system('spd-say "You Miss"')
 
-    elif pr[0] == 0:
+    elif pr[0] == 1:
         print('Scored')
         os.system('spd-say "You Scored"')
 
-    else:
+    elif pr[0] == np.nan:
         print('No putt detected')
         os.system('spd-say "No putt detected"')
