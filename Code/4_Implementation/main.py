@@ -44,7 +44,7 @@ if __name__ == "__main__":
     model.load_model("./data/catboost_model.cb")
 
     # Set input arguments
-    lower_bound_AZ = -300  # For AZ
+    lower_bound_AZ = -200  # For AZ
     window = 50
     margin = 25  # Left margin if we detected a first break through
 

@@ -38,12 +38,12 @@ def CollectData(mac):
     print(notify_handle)
 
     # Continue record
-    input("Press Enter to continue... ")
+    time.sleep(4)
 
     os.system('spd-say "Ready"')
     for i in range(3, 1, -1):
         print('Ready', i + 1)
-        time.sleep(1)
+        time.sleep(3)
 
     os.system('spd-say "Go"')
 
@@ -61,4 +61,5 @@ def CollectData(mac):
     os.system('spd-say "Stop"')
     print("Disconnected")
     out = pd.DataFrame(out)
+    out.to_csv('test_4.csv')
     return(out)
