@@ -26,8 +26,9 @@ def MakePrediction(distance, df, lower_bound_AZ, window, margin, model):
     else:
         # Create dataset for the  model
         feats['Distance'] = distance
-        feats.drop('Id', axis=1, inplace=True)
-
+        #feats.drop('Id', axis=1, inplace=True)
+        feats = feats[model.feature_names_]
+        print(feats)
         pred = model.predict(feats)
 
         return(pred)

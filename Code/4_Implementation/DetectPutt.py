@@ -189,14 +189,18 @@ class Putt:
             # We keep only first put
             df = df.loc[(df.Id == 1) & (df.Stage == 'Forward'), :]
 
-            # Create vector distance
-            df['Accel'] = df[['AZ', 'AY', 'AX']].apply(lambda x: np.sqrt(
-                x.iloc[0]**2 + x.iloc[1]**2 + x.iloc[2]**2), axis=1)
-            df['Gyro'] = df[['GZ', 'GY', 'GX']].apply(lambda x: np.sqrt(
-                x.iloc[0]**2 + x.iloc[1]**2 + x.iloc[2]**2), axis=1)
+            # Commented out - excluded from the model
+            # # Create vector distance
+            # df['Accel'] = df[['AZ', 'AY', 'AX']].apply(lambda x: np.sqrt(
+            #     x.iloc[0]**2 + x.iloc[1]**2 + x.iloc[2]**2), axis=1)
+            # df['Gyro'] = df[['GZ', 'GY', 'GX']].apply(lambda x: np.sqrt(
+            #     x.iloc[0]**2 + x.iloc[1]**2 + x.iloc[2]**2), axis=1)
 
             # Set variables
-            var_list = ['AX', 'AY', 'AZ', 'GX', 'GY', 'GZ', 'Accel', 'Gyro']
+            # var_list = ['AX', 'AY', 'AZ', 'GX', 'GY', 'GZ', 'Accel', 'Gyro'] # X -axis exluded from the model
+            #df = df.drop(['AX', 'GX'], axis=1, inplace=True)
+
+            var_list = ['AY', 'AZ', 'GY', 'GZ']
 
             out = pd.DataFrame({"Id": 1}, index=[1])
 
