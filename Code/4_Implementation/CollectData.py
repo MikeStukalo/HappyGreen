@@ -4,27 +4,30 @@ import pandas as pd
 import time
 import os
 
-out = []
 
-
-class MyDelegate(DefaultDelegate):
-    def __init__(self):
-        DefaultDelegate.__init__(self)
-
-    def handleNotification(self, cHandle, data):
-        d = struct.unpack('<Hhhhhhhhhh', data)
-        r = {'Time': d[0], 'AX': d[1], 'AY': d[2], 'AZ': d[3],
-             'GX': d[7], 'GY': d[8], 'GZ': d[9]}
-
-        out.append(r)
-
-        print(r)
 
 
 def CollectData(mac):
     '''
     Function that collects data from the sensor
     '''
+
+    out = []
+
+
+    class MyDelegate(DefaultDelegate):
+        def __init__(self):
+            DefaultDelegate.__init__(self)
+
+        def handleNotification(self, cHandle, data):
+            d = struct.unpack('<Hhhhhhhhhh', data)
+            r = {'Time': d[0], 'AX': d[1], 'AY': d[2], 'AZ': d[3],
+                 'GX': d[7], 'GY': d[8], 'GZ': d[9]}
+
+            out.append(r)
+
+            print(r)
+
     p = Peripheral(mac, "random")
     chara_uuid = "00e00000-0001-11e1-ac36-0002a5d5c51b"
     p.setDelegate(MyDelegate())
@@ -38,7 +41,7 @@ def CollectData(mac):
     print(notify_handle)
 
     # Continue record
-    input("Press Enter to continue... Press Ctrl+C to interrupt")
+    input("Press Enter to continue... ")
 
     os.system('spd-say "Ready"')
     for i in range(3, 0, -1):
@@ -53,12 +56,14 @@ def CollectData(mac):
     # Record for 3 seconds
     t = 0
     start = time.time()
-    while t < 3:
+    while t < 3.0:
+        t = time.time()-start
         if p.waitForNotifications(1.0):
-            t = start - time.time()
             continue
 
     os.system('spd-say "Stop"')
     print("Disconnected")
     out = pd.DataFrame(out)
+    out.to_csv("~/Documents/test.csv")
+    print(out.head())
     return(out)
