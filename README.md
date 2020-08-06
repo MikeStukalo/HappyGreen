@@ -27,4 +27,4 @@ The putts were recorded and tested using an indoor putt green.
 
 ## Video
 You can watch a video presentation here
-<Paste link>
+[https://youtu.be/2S7rDOkyQkU]
